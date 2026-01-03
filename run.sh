@@ -52,6 +52,7 @@ fi
 
 read -p "Ваш выбор [1/2]: " choice
 
+if [ "$choice" = "1" ]; then
     # --- DOCKER SETUP ---
     
     # Настройка команды (на macOS sudo не нужен)
