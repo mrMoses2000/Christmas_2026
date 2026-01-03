@@ -99,11 +99,15 @@ if [ "$choice" = "1" ]; then
     $DOCKER_CMD stop buzz-container 2>/dev/null || true
     $DOCKER_CMD rm buzz-container 2>/dev/null || true
     
+    # Получаем полный путь к папке sounds (мы сейчас внутри site)
+    SOUNDS_DIR="$(pwd)/sounds"
+
     # Запускаем
     $DOCKER_CMD run -d \
         --name buzz-container \
         --restart unless-stopped \
         -p $PORT:80 \
+        -v "$SOUNDS_DIR":/usr/share/nginx/html/sounds \
         buzz-site
 
     echo ">>> ✅ Готово! Сайт запущен в Docker контейнере на порту $PORT."
