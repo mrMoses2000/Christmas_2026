@@ -56,20 +56,24 @@ if [ "$choice" = "1" ]; then
     # Собираем образ (имя: buzz-site)
     sudo docker build -t buzz-site .
     
-    echo ">>> Запуск контейнера..."
+    # Спрашиваем порт
+    read -p "На каком порту запустить сайт? (По умолчанию 80): " PORT
+    PORT=${PORT:-80}
+
+    echo ">>> Запуск контейнера на порту $PORT..."
     # Останавливаем старый, если есть
     sudo docker stop buzz-container 2>/dev/null || true
     sudo docker rm buzz-container 2>/dev/null || true
     
-    # Запускаем на 80 порту (всегда перезапускать)
+    # Запускаем
     sudo docker run -d \
         --name buzz-container \
         --restart unless-stopped \
-        -p 80:80 \
+        -p $PORT:80 \
         buzz-site
 
-    echo ">>> ✅ Готово! Сайт запущен в Docker контейнере на порту 80."
-    echo "    Проверьте: http://$(curl -s ifconfig.me)"
+    echo ">>> ✅ Готово! Сайт запущен в Docker контейнере на порту $PORT."
+    echo "    Проверьте: http://localhost:$PORT или http://$(curl -s ifconfig.me):$PORT"
 
 elif [ "$choice" = "2" ]; then
     # --- NGINX HOST SETUP ---
