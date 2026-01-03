@@ -52,23 +52,41 @@ fi
 
 read -p "Ваш выбор [1/2]: " choice
 
-if [ "$choice" = "1" ]; then
     # --- DOCKER SETUP ---
     
-    # Проверка Docker
+    # Настройка команды (на macOS sudo не нужен)
+    if [ "$OS" = "Darwin" ]; then
+        DOCKER_CMD="docker"
+    else
+        DOCKER_CMD="sudo docker"
+    fi
+
+    # Проверка наличия Docker
     if ! command -v docker &> /dev/null; then
         if [ "$OS" = "Darwin" ]; then
-             echo "❌ Docker не найден. На macOS нужно установить Docker Desktop вручную: https://www.docker.com/products/docker-desktop/"
+             echo "❌ Docker не найден. На macOS нужно установить Docker Desktop: https://www.docker.com/products/docker-desktop/"
              exit 1
         else
              install_docker
         fi
     fi
 
+    # Проверка запущен ли демон
+    echo ">>> Проверка Docker демона..."
+    if ! $DOCKER_CMD info > /dev/null 2>&1; then
+        echo "❌ ОШИБКА: Docker демон не запущен!"
+        if [ "$OS" = "Darwin" ]; then
+            echo "    Пожалуйста, откройте приложение 'Docker Desktop' и дождитесь его загрузки."
+        else
+            echo "    Запустите его командой: sudo systemctl start docker"
+        fi
+        exit 1
+    fi
+
     echo ">>> Сборка Docker образа..."
     cd site
     # Собираем образ (имя: buzz-site)
-    sudo docker build -t buzz-site .
+    $DOCKER_CMD build -t buzz-site .
     
     # Спрашиваем порт
     read -p "На каком порту запустить сайт? (По умолчанию 80): " PORT
@@ -76,11 +94,11 @@ if [ "$choice" = "1" ]; then
 
     echo ">>> Запуск контейнера на порту $PORT..."
     # Останавливаем старый, если есть
-    sudo docker stop buzz-container 2>/dev/null || true
-    sudo docker rm buzz-container 2>/dev/null || true
+    $DOCKER_CMD stop buzz-container 2>/dev/null || true
+    $DOCKER_CMD rm buzz-container 2>/dev/null || true
     
     # Запускаем
-    sudo docker run -d \
+    $DOCKER_CMD run -d \
         --name buzz-container \
         --restart unless-stopped \
         -p $PORT:80 \
