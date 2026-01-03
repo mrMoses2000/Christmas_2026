@@ -37,10 +37,19 @@ install_docker() {
     echo ">>> Docker установлен."
 }
 
-# 3. Выбор метода развертывания
+# 3. Определение ОС
+OS="$(uname -s)"
+echo ">>> Обнаружена система: $OS"
+
+# 4. Выбор метода развертывания
 echo "Выберите метод развертывания:"
 echo "1) Docker (Рекомендуется - изолированный контейнер)"
-echo "2) Nginx на хосте (Классический - просто копирует файлы в /var/www)"
+if [ "$OS" = "Darwin" ]; then
+    echo "2) Локальный запуск (Python HTTP Server - для macOS)"
+else
+    echo "2) Nginx на хосте (Классический - /var/www)"
+fi
+
 read -p "Ваш выбор [1/2]: " choice
 
 if [ "$choice" = "1" ]; then
@@ -48,7 +57,12 @@ if [ "$choice" = "1" ]; then
     
     # Проверка Docker
     if ! command -v docker &> /dev/null; then
-        install_docker
+        if [ "$OS" = "Darwin" ]; then
+             echo "❌ Docker не найден. На macOS нужно установить Docker Desktop вручную: https://www.docker.com/products/docker-desktop/"
+             exit 1
+        else
+             install_docker
+        fi
     fi
 
     echo ">>> Сборка Docker образа..."
@@ -73,39 +87,91 @@ if [ "$choice" = "1" ]; then
         buzz-site
 
     echo ">>> ✅ Готово! Сайт запущен в Docker контейнере на порту $PORT."
-    echo "    Проверьте: http://localhost:$PORT или http://$(curl -s ifconfig.me):$PORT"
+    # Определение IP для вывода
+    if [ "$OS" = "Darwin" ]; then
+        # Robust IP detection for macOS
+        DEFAULT_IF=$(route -n get default 2>/dev/null | grep 'interface:' | awk '{print $2}')
+        if [ -n "$DEFAULT_IF" ]; then
+            IP=$(ipconfig getifaddr "$DEFAULT_IF")
+        fi
+        if [ -z "$IP" ]; then IP=$(ipconfig getifaddr en0); fi
+        if [ -z "$IP" ]; then IP=$(ipconfig getifaddr en1); fi
+        
+        echo "    📱 Откройте на телефоне: http://$IP:$PORT"
+    else
+        echo "    📱 Откройте на телефоне: http://$(hostname -I | cut -d' ' -f1):$PORT"
+    fi
+    echo "    💻 Откройте на компьютере: http://localhost:$PORT"
 
 elif [ "$choice" = "2" ]; then
-    # --- NGINX HOST SETUP ---
     
-    echo ">>> Устанавливаем Nginx..."
-    sudo apt-get update
-    sudo apt-get install -y nginx
+    if [ "$OS" = "Darwin" ]; then
+        # --- MACOS PYTHON SETUP ---
+        echo ">>> Запуск простого веб-сервера (macOS)..."
+        
+        # Спрашиваем порт
+        read -p "На каком порту запустить? (По умолчанию 8000): " PORT
+        PORT=${PORT:-8000}
+        
+        # Определение IP (Robust method)
+        # 1. Пробуем найти интерфейс через маршрут по умолчанию (самый надежный способ для интернета/LAN)
+        DEFAULT_IF=$(route -n get default 2>/dev/null | grep 'interface:' | awk '{print $2}')
+        
+        if [ -n "$DEFAULT_IF" ]; then
+            IP=$(ipconfig getifaddr "$DEFAULT_IF")
+        fi
 
-    echo ">>> Настраиваем файлы..."
-    # Создаем папку если нет
-    sudo mkdir -p /var/www/html/sounds
-    
-    # Удаляем дефолт
-    sudo rm -f /var/www/html/index.html
-    sudo rm -f /var/www/html/index.nginx-debian.html
+        # 2. Если не вышло, перебираем стандартные интерфейсы
+        if [ -z "$IP" ]; then
+            IP=$(ipconfig getifaddr en0)
+        fi
+        if [ -z "$IP" ]; then
+            IP=$(ipconfig getifaddr en1)
+        fi
+        
+        # 3. Если все еще пусто — ищем любой IPv4, исключая localhost (127.0.0.1)
+        if [ -z "$IP" ]; then
+            IP=$(ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}' | head -n 1)
+        fi
 
-    # Копируем наши файлы
-    sudo cp site/buzz_sounds.html /var/www/html/index.html
+        echo ">>> 🚀 Сервер запущен!"
+        echo "    📱 Откройте на телефоне: http://$IP:$PORT/buzz_sounds.html"
+        echo "    💻 Нажмите Ctrl+C, чтобы остановить сервер."
+        
+        cd site
+        python3 -m http.server $PORT
+        
+    else
+        # --- LINUX NGINX SETUP ---
+        echo ">>> Устанавливаем Nginx..."
+        sudo apt-get update
+        sudo apt-get install -y nginx
     
-    if [ -d "site/sounds" ]; then
-        sudo cp -r site/sounds/* /var/www/html/sounds/ || true
+        echo ">>> Настраиваем файлы..."
+        # Создаем папку если нет
+        sudo mkdir -p /var/www/html/sounds
+        
+        # Удаляем дефолт
+        sudo rm -f /var/www/html/index.html
+        sudo rm -f /var/www/html/index.nginx-debian.html
+    
+        # Копируем наши файлы
+        sudo cp site/buzz_sounds.html /var/www/html/index.html
+        
+        if [ -d "site/sounds" ]; then
+            sudo cp -r site/sounds/* /var/www/html/sounds/ || true
+        fi
+    
+        # Права доступа
+        sudo chown -R www-data:www-data /var/www/html
+        sudo chmod -R 755 /var/www/html
+    
+        echo ">>> Перезагружаем Nginx..."
+        sudo systemctl restart nginx
+    
+        echo ">>> ✅ Готово! Сайт запущен через Nginx."
+        echo "    Проверьте: http://$(curl -s ifconfig.me)"
     fi
-
-    # Права доступа
-    sudo chown -R www-data:www-data /var/www/html
-    sudo chmod -R 755 /var/www/html
-
-    echo ">>> Перезагружаем Nginx..."
-    sudo systemctl restart nginx
-
-    echo ">>> ✅ Готово! Сайт запущен через Nginx."
-    echo "    Проверьте: http://$(curl -s ifconfig.me)"
 else
     echo "Неверный выбор. Отмена."
     exit 1
