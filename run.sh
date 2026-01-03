@@ -49,8 +49,9 @@ if [ "$OS" = "Darwin" ]; then
 else
     echo "2) Nginx на хосте (Классический - /var/www)"
 fi
+echo "3) Управление контейнером (Стоп/Рестарт/Логи)"
 
-read -p "Ваш выбор [1/2]: " choice
+read -p "Ваш выбор [1/2/3]: " choice
 
 if [ "$choice" = "1" ]; then
     # --- DOCKER SETUP ---
@@ -191,6 +192,39 @@ elif [ "$choice" = "2" ]; then
         echo ">>> ✅ Готово! Сайт запущен через Nginx."
         echo "    Проверьте: http://$(curl -s ifconfig.me)"
     fi
+elif [ "$choice" = "3" ]; then
+    # --- CONTAINER MANAGEMENT ---
+    
+    # Настройка команды (на macOS sudo не нужен)
+    if [ "$OS" = "Darwin" ]; then
+        DOCKER_CMD="docker"
+    else
+        DOCKER_CMD="sudo docker"
+    fi
+    
+    echo ">>> Управление контейнером 'buzz-container':"
+    echo "1) Остановить (Stop)"
+    echo "2) Перезапустить (Restart)"
+    echo "3) Посмотреть логи (Logs)"
+    read -p "Выберите действие [1/2/3]: " action
+    
+    if [ "$action" = "1" ]; then
+        echo ">>> Остановка контейнера..."
+        $DOCKER_CMD stop buzz-container
+        echo ">>> Контейнер остановлен."
+        
+    elif [ "$action" = "2" ]; then
+        echo ">>> Перезапуск контейнера..."
+        $DOCKER_CMD restart buzz-container
+        echo ">>> Контейнер перезапущен."
+        
+    elif [ "$action" = "3" ]; then
+        echo ">>> Логи контейнера (последние 20 строк):"
+        $DOCKER_CMD logs --tail 20 buzz-container
+    else
+        echo "Неверное действие."
+    fi
+
 else
     echo "Неверный выбор. Отмена."
     exit 1
