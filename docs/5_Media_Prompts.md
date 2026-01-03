@@ -1,53 +1,38 @@
-# Полный Реестр Медиа-Промптов (v3.0)
+# Промпты для Генерации Медиа v4.0 (Духовный акцент)
 
-Этот файл содержит все необходимые промпты для генерации контента через **Google Veo 3.1**, **Sora 2**, **Midjourney** или **DALL-E 3**.
+Этот файл — инструкция для ИИ по созданию контента, который свяжет мир игрушек с историей Рождества.
 
 ---
 
 ## 📽 ВИДЕО (Veo 3.1 / Sora 2)
 
-### 1. Медведь Лотсо (Помехи и Угроза)
-*   **Prompt:** `Cinematic close-up of Lotso Bear from Toy Story 3. Pink fur, strawberry texture, slightly worn and dirty. Lighting is dark and dramatic, similar to the 'Saw' movie puppet scenes. The video starts with heavy analog TV static (glitch effect), then Lotso's sinister face emerges. He looks into the camera, blinking slowly. Hyper-realistic, Pixar style but with a horror twist. 4K, realistic fur physics.`
+### 1. Тень Медведя (Мистика)
+*   **Prompt:** `Shadow of a large teddy bear falling on a wooden floor next to a missing cradle. Analog film grain, dark room, single light source from a window. Ominous but not terrifying. 4K, realistic lighting.`
 
-### 2. Лотсо в Сейфе (Финал)
-*   **Prompt:** `Wide shot of a dark, dusty basement corner. Lotso Huggin' Bear is sitting on a throne made of abandoned wooden blocks and broken toy parts. He is holding a small toy wooden cane. Low angle shot, making him look imposing. Atmospheric dust particles in the air. Lighting is cold blue and deep orange.`
+### 2. Лотсо (Психологическое давление)
+*   **Prompt:** `Close-up of Lotso Huggin' Bear from Toy Story. His fur is dusty pink, strawberry texture. He is in a dark attic. He looks at the camera and whispers (visual only). The background flickers with static electricity. Cinematic lighting, dramatic shadows.`
 
-### 3. Пёс Скуд (Сон)
-*   **Prompt:** `Bull Terrier dog (Scud from Toy Story) sleeping on a suburban living room rug. 3D animation style, Pixar inspired. The dog is snoring deeply, chest moving up and down. Occasionally one ear twitches. High detail fur, soft indoor lighting.`
-
-### 4. Пёс Скуд (Лай)
-*   **Prompt:** `Bull Terrier dog (Scud) suddenly waking up, snapping its jaws at the camera. Ferocious expression, barking with saliva flying. Fast camera movement, slight shake to simulate panic. High energy, dramatic 3D animation.`
+### 3. Скуд (Сон и Пробуждение)
+*   **Prompt:** `A Bull Terrier (Scud) sleeping heavily. His cheeks move with each breath. Suddenly, he snaps his eyes open and growls. 3D Pixar animation style, high quality textures.`
 
 ---
 
-## 🖼 ИЗОБРАЖЕНИЯ (Слайды для проектора)
+## 🖼 ИЗОБРАЖЕНИЯ (Для исторической части)
 
-### 1. Теневые позы (Силуэты)
-*   **Prompt:** `Solid black silhouette of a cowboy (Woody) in various dynamic action poses: one leg up, arms crossed, hand at hat. White background. Minimalist graphic style. Generate a series of 15 different poses.`
-*   **Prompt:** `Solid black silhouette of a space ranger (Buzz Lightyear) in heroic poses: wings out, laser pointer arm raised, karate chop stance. White background.`
+### 1. Рождество в Древнем Казахстане
+*   **Prompt:** `Hyper-realistic archaeological reconstruction of a Nestorian Christian church in Taraz, Kazakhstan, 8th century. Sun-baked bricks, ancient Central Asian architecture, a stone cross carved into the entrance. Silk Road caravan passing by in the background. Sunset lighting, majestic atmosphere.`
+*   **Prompt:** `A hand-drawn map of the Silk Road through Kazakhstan, highlighted with glowing locations of ancient churches. Parchment texture, medieval style.`
 
-### 2. История Казахстана (Рождество в Таразе)
-*   **Prompt:** `Old, sepia-toned historical photograph style. A view of an ancient brick church in Taraz, Kazakhstan, from the Nestorian era. Crosses on the domes, merchant caravans nearby. Nostalgic, educational, high detail.`
-*   **Prompt:** `A beautiful panoramic view of the Silk Road passing through Kazakhstan winter landscape. Snow-covered steppes, ancient Silk Road stone markers. Majestic sunset.`
+### 2. Теневые Силуэты (Для прыжков)
+*   **Prompt:** `Pure black silhouette of constant characters on a white background. Woody the cowboy in a 'superhero landing' pose. High contrast, vector style.`
+*   **Prompt:** `Pure black silhouette of Buzz Lightyear in a 'karate chop' defense pose. High contrast, vector style.`
 
 ---
 
 ## 🔊 АУДИО (ElevenLabs / Suno)
 
-### 1. Речевки Лотсо (Vibe: Sinister and Calm)
-*   *Озвучка для видео:* 
-    *   «Я вижу вас... Вы думаете, это игра? В этом доме правила устанавливаю я!»
-    *   «Ха-ха-ха! Вы опоздали. Младенец теперь мой трофей. Хотите его вернуть? Сначала пройдите моих 'друзей'!»
-    *   «ПРАВДА? Вы действительно верите в это слово? Посмотрим, поможет ли оно вам в темноте!»
+### 1. Речь Лотсо (Универсальная)
+*   **Script:** «Вы ищете Младенца? Ха! Вы ищете то, чего здесь нет. Энди повзрослеет и забудет Его. Рождество — это просто коробки с лентами. Без Младенца этот дом — просто склад старого барахла!» (Vibe: Cold, manipulative).
 
-### 2. Звуковые эффекты (SFX)
-*   **Сирена:** `Industrial high-pitched emergency siren, loopable.`
-*   **Дверь на ключ:** `Sounds of a heavy wooden door being closed and double-locked with a metallic key turn.`
-*   **Лай Скуда:** `Aggressive bull terrier barking and growling, close-up recording.`
-*   **Магическое сканирование:** `High-tech, magical chime and whirring sound, positive and sparkling.`
-
----
-
-## 🎨 ДЕКОРАЦИИ И ГРАФИКА
-*   **Слайд "Система OFF":** `Digital screen displaying 'LASER SYSTEM: DEACTIVATED' in large green retro-computer font. Background is dark blue circuit lines.`
-*   **Слайд "Сейф":** `Ultra-detailed CG image of a heavy, old-fashioned combination safe. Golden wheel, heavy bolts. Cinematic lighting.`
+### 2. Фоновая музыка (Финал):
+*   **Prompt:** `Ambient orchestral music, transitioning from tension to a grand, angelic choral climax. Instruments: Cello, Church Organ, Soft Chimes. Theme: Hope and Revelation.`

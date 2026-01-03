@@ -1,118 +1,384 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buzz Lightyear Soundboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Buzz Lightyear Wrist Communicator</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap');
+
         body {
-            background-color: #2c3e50;
-            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            font-family: 'Orbitron', sans-serif;
             margin: 0;
             padding: 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             min-height: 100vh;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #2c3e50 0%, #000 100%);
         }
 
-        .panel {
-            background-color: #ecf0f1;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        /* --- THE WRIST UNIT --- */
+        .wrist-unit {
+            position: relative;
             width: 100%;
-            max-width: 400px;
-            border: 5px solid #95a5a6;
-        }
-
-        h1 {
-            text-align: center;
-            color: #27ae60; /* Buzz Green */
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            font-style: italic;
-        }
-
-        .button-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            max-width: 450px;
+            background: #e0e0e0;
+            /* White plastic */
+            border-radius: 40px;
+            padding: 15px;
+            box-shadow:
+                inset 0 0 20px rgba(255, 255, 255, 0.8),
+                0 20px 50px rgba(0, 0, 0, 0.8),
+                0 0 0 10px #42b549;
+            /* Green trim */
+            border-bottom: 15px solid #bbb;
+            /* Thickness */
+            display: flex;
+            flex-direction: column;
             gap: 15px;
         }
 
-        .sound-btn {
-            padding: 20px;
-            font-size: 16px;
-            font-weight: bold;
-            color: white;
+        /* --- LID (Decorative) --- */
+        .lid-hinge {
+            height: 20px;
+            background: linear-gradient(to right, #ccc, #fff, #ccc);
+            border-radius: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #999;
+        }
+
+        /* --- TOP PANEL (Dial & Grill) --- */
+        .top-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .dial-container {
+            width: 80px;
+            height: 80px;
+            background: #ddd;
+            border-radius: 50%;
+            border: 3px solid #999;
+            position: relative;
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dial-face {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            position: relative;
+            background: conic-gradient(from 180deg, red 0deg, yellow 60deg, green 120deg, white 120deg);
+            transform: rotate(-90deg);
+            border: 2px solid #555;
+        }
+
+        .dial-needle {
+            width: 2px;
+            height: 30px;
+            background: black;
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            transform: rotate(45deg);
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .speaker-grill {
+            flex-grow: 1;
+            margin-left: 20px;
+            height: 60px;
+            background: repeating-linear-gradient(90deg,
+                    #333,
+                    #333 4px,
+                    #666 4px,
+                    #666 8px);
+            border-radius: 10px;
+            border: 2px solid #555;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- SCREEN --- */
+        .screen-container {
+            background: #222;
+            padding: 10px;
+            border-radius: 10px;
+            border: 4px solid #555;
+            box-shadow: inset 0 0 10px #000;
+        }
+
+        .screen {
+            background: #000;
+            color: #00ff00;
+            /* Retro Green */
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            border-radius: 5px;
+            text-shadow: 0 0 5px #00ff00;
+            min-height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- BUTTON GRID --- */
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 10px;
+            background: #ccc;
+            border-radius: 10px;
+            border: 1px solid #aaa;
+        }
+
+        .btn {
+            height: 70px;
             border: none;
             border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: transform 0.1s, opacity 0.2s;
+            position: relative;
+            box-shadow:
+                0 5px 0 rgba(0, 0, 0, 0.3),
+                0 5px 10px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            transition: all 0.1s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+            padding: 5px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+            user-select: none;
         }
 
-        .sound-btn:active {
+        .btn:active {
             transform: translateY(4px);
-            box-shadow: none;
+            box-shadow:
+                0 1px 0 rgba(0, 0, 0, 0.3),
+                inset 0 2px 5px rgba(0, 0, 0, 0.5);
         }
 
-        .btn-red { background-color: #e74c3c; } /* Laser */
-        .btn-green { background-color: #2ecc71; } /* Phrase */
-        .btn-blue { background-color: #3498db; } /* Command */
-        .btn-purple { background-color: #9b59b6; } /* Special */
+        /* Button Colors based on functions */
+        .btn-red {
+            background-color: #d32f2f;
+        }
 
-        .status {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 12px;
-            color: #7f8c8d;
+        .btn-green {
+            background-color: #2e7d32;
+        }
+
+        .btn-blue {
+            background-color: #0277bd;
+        }
+
+        .btn-purple {
+            background-color: #7b1fa2;
+        }
+
+        .btn-yellow {
+            background-color: #f9a825;
+            color: #333;
+            text-shadow: none;
+        }
+
+        .btn-orange {
+            background-color: #e64a19;
+        }
+
+        /* Icon styling integration */
+        .btn span {
+            pointer-events: none;
+        }
+
+        /* --- STICKERS / LABELS --- */
+        .sticker {
+            position: absolute;
+            background: yellow;
+            color: black;
+            font-size: 10px;
+            padding: 2px 5px;
+            font-weight: bold;
+            border: 1px solid black;
+            transform: rotate(-5deg);
+        }
+
+        .sticker-gamma {
+            bottom: 110px;
+            right: 20px;
+            background: black;
+            color: yellow;
+            border: 1px solid yellow;
+            transform: none;
+            font-size: 0.7rem;
+        }
+
+        /* --- BIG LASER BUTTON (Floating Action Button style but integrated) --- */
+        .laser-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .btn-big-red {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #c62828;
+            border: 4px solid #b71c1c;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4), 0 8px 0 #7f0000;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-big-red:active {
+            transform: translateY(6px);
+            box-shadow: 0 2px 0 #7f0000;
         }
     </style>
 </head>
+
 <body>
 
-    <div class="panel">
-        <h1>Star Command</h1>
-        
-        <div class="button-grid">
-            <button class="sound-btn btn-red" onclick="playSound('laser')">ЛАЗЕР</button>
-            <button class="sound-btn btn-green" onclick="playSound('infinity')">БЕСКОНЕЧНОСТЬ</button>
-            <button class="sound-btn btn-blue" onclick="playSound('command')">КОМАНДА</button>
-            <button class="sound-btn btn-purple" onclick="playSound('scan')">СКАНЕР</button>
-            <button class="sound-btn btn-red" onclick="playSound('alert')">ТРЕВОГА</button>
-            <button class="sound-btn btn-green" onclick="playSound('welcome')">Я БАЗЗ</button>
+    <div class="wrist-unit">
+        <div class="lid-hinge"></div>
+
+        <!-- Upper Panel -->
+        <div class="top-panel">
+            <div class="dial-container">
+                <div class="dial-face">
+                    <div class="dial-needle" id="needle"></div>
+                </div>
+            </div>
+            <div class="speaker-grill"></div>
         </div>
 
-        <div class="status">v1.0 - Christmas Operations</div>
+        <!-- Monitor -->
+        <div class="screen-container">
+            <div class="screen" id="display-text">GAMMA SECTOR 4</div>
+        </div>
+
+        <!-- Main Interactions -->
+        <div class="controls">
+            <!-- Row 1: Identity & Comms -->
+            <button class="btn btn-blue" onclick="play('buzz_star_center', 'Star Command')">
+                <span>⭐ Star Command</span>
+            </button>
+            <button class="btn btn-green" onclick="play('Я_Баз', 'I AM BUZZ')">
+                <span>🗣 Я - БАЗЗ!</span>
+            </button>
+            <button class="btn btn-yellow" onclick="play('Ободрение', 'Good Job!')">
+                <span>👍 Молодец!</span>
+            </button>
+
+            <!-- Row 2: Action & Villains -->
+            <button class="btn btn-purple" onclick="play('Гадкий_Лотсо', 'Evil Lotso')">
+                <span>🐻 ЛОТСО</span>
+            </button>
+            <button class="btn btn-orange" onclick="play('Тихо_пес_спит', 'Stealth Mode')">
+                <span>🤫 ТИХО (ПЁС)</span>
+            </button>
+            <button class="btn btn-purple" onclick="play('Во_время_прыжков', 'Jump!')">
+                <span>🏃 ПРЫЖКИ</span>
+            </button>
+
+            <!-- Row 3: Finale -->
+            <button class="btn btn-green" onclick="play('Завершающая_речь', 'Log Entry 1')">
+                <span>📜 ФИНАЛ 1</span>
+            </button>
+            <button class="btn btn-green" onclick="play('Завершающая_речь_2', 'Log Entry 2')">
+                <span>📜 ФИНАЛ 2</span>
+            </button>
+            <button class="btn btn-red" onclick="play('Во_время_лазеров', 'LASER!')">
+                <span>⚡ ЛАЗЕРЫ</span>
+            </button>
+        </div>
+
+        <div style="text-align: center; color: #777; font-size: 0.8rem; margin-top: 5px;">
+            MADE IN TAIWAN
+        </div>
     </div>
 
-    <!-- 
-       ВНИМАНИЕ: Для работы звуков, создайте папку 'sounds' рядом с этим файлом
-       и положите туда файлы: laser.mp3, infinity.mp3, command.mp3, scan.mp3, alert.mp3, welcome.mp3
-    -->
-
-    <audio id="laser" src="sounds/laser.mp3"></audio>
-    <audio id="infinity" src="sounds/infinity.mp3"></audio>
-    <audio id="command" src="sounds/command.mp3"></audio>
-    <audio id="scan" src="sounds/scan.mp3"></audio>
-    <audio id="alert" src="sounds/alert.mp3"></audio>
-    <audio id="welcome" src="sounds/welcome.mp3"></audio>
+    <!-- AUDIO FILES -->
+    <audio id="buzz_star_center" src="sounds/buzz_star_center.mp3"></audio>
+    <audio id="Я_Баз" src="sounds/Я_Баз_и_я_спасу_Рождество.mp3"></audio>
+    <audio id="Ободрение" src="sounds/Ободрение_детей.mp3"></audio>
+    <audio id="Гадкий_Лотсо" src="sounds/Гадкий_Лотсо.mp3"></audio>
+    <audio id="Тихо_пес_спит" src="sounds/Тихо_пес_спит.mp3"></audio>
+    <audio id="Во_время_прыжков" src="sounds/Во_время_прыжков.mp3"></audio>
+    <audio id="Завершающая_речь" src="sounds/Завершающая_речь.mp3"></audio>
+    <audio id="Завершающая_речь_2" src="sounds/Завершающая_речь_2.mp3"></audio>
+    <audio id="Во_время_лазеров" src="sounds/Во_время_лазеров.mp3"></audio>
 
     <script>
-        function playSound(id) {
-            const audio = document.getElementById(id);
-            if (audio) {
-                // Сброс времени, чтобы можно было нажимать быстро
-                audio.currentTime = 0;
-                audio.play().catch(e => {
-                     console.log("Audio file not found or autoplay blocked: " + e);
-                     alert("Звук '" + id + "' воспроизводится! (Файл не найден)");
-                });
+        const display = document.getElementById('display-text');
+        const needle = document.getElementById('needle');
+        let resetTimer;
+
+        function play(id, text) {
+            // STOP ALL OTHERS
+            document.querySelectorAll('audio').forEach(a => {
+                a.pause();
+                a.currentTime = 0;
+            });
+
+            // PLAY CURRENT
+            const sound = document.getElementById(id);
+            if (sound) {
+                sound.play();
+                updateDisplay(text.toUpperCase());
+                animateNeedle();
+            } else {
+                updateDisplay("ERR: NO SOUND");
             }
+        }
+
+        function updateDisplay(text) {
+            display.innerText = text;
+            display.style.color = '#fff';
+            display.style.textShadow = '0 0 10px #fff';
+
+            clearTimeout(resetTimer);
+            resetTimer = setTimeout(() => {
+                display.innerText = "GAMMA SECTOR 4";
+                display.style.color = "#00ff00";
+                display.style.textShadow = "0 0 5px #00ff00";
+            }, 3000);
+        }
+
+        function animateNeedle() {
+            // Random gauge movement
+            const randomRot = Math.floor(Math.random() * 180) - 90;
+            needle.style.transform = `rotate(${randomRot}deg)`;
+
+            setTimeout(() => {
+                needle.style.transform = `rotate(45deg)`;
+            }, 500);
         }
     </script>
 </body>
+
 </html>

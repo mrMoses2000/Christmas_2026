@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Production Guide - Operation: Save Christmas 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:ital,wght@0,400;0,600;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
+
+        :root {
+            --andy-blue: #0081C9;
+            --andy-yellow: #FFC93C;
+            --toy-red: #DB3022;
+            --space-green: #5BB318;
+            --paper-bg: #FFFFFF;
+            --section-bg: #F8F9FA;
+        }
+
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #EFEFEF;
+            margin: 0;
+            padding: 0;
+            color: #2D3436;
+        }
+
+        .master-container {
+            max-width: 1000px;
+            background: var(--paper-bg);
+            margin: 40px auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Decorative Header */
+        .hero {
+            background: var(--andy-blue);
+            padding: 60px 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+            border-bottom: 8px solid var(--andy-yellow);
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5em;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 3px 3px 0px var(--toy-red);
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin-top: 10px;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        /* Content Sections */
+        .content-wrap {
+            padding: 60px;
+        }
+
+        section {
+            margin-bottom: 80px;
+            page-break-after: always;
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2em;
+            color: var(--andy-blue);
+            border-bottom: 3px solid var(--andy-yellow);
+            padding-bottom: 10px;
+            margin-top: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: "★";
+            margin-right: 15px;
+            color: var(--andy-yellow);
+        }
+
+        h3 {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--andy-blue);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            display: inline-block;
+            margin-top: 30px;
+        }
+
+        /* Theatrical Formatting */
+        .script-block {
+            margin: 30px 0;
+            padding: 20px;
+            background: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+
+        .dialogue {
+            font-family: 'Courier Prime', monospace;
+            margin: 20px auto;
+            width: 80%;
+            position: relative;
+        }
+
+        .character {
+            font-weight: bold;
+            text-align: center;
+            display: block;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            color: var(--toy-red);
+        }
+
+        .text {
+            display: block;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .parenthetical {
+            font-style: italic;
+            font-size: 0.9em;
+            display: block;
+            text-align: center;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        .action {
+            font-style: italic;
+            color: #444;
+            margin: 15px 0;
+            padding-left: 20px;
+            border-left: 4px solid var(--andy-yellow);
+        }
+
+        /* Tech Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        th {
+            background: var(--andy-blue);
+            color: white;
+            padding: 15px;
+            text-transform: uppercase;
+            font-size: 0.8em;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+
+        tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        /* Media Prompts */
+        .prompt-box {
+            background: #2D3436;
+            color: #F8F9FA;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier Prime', monospace;
+            margin: 15px 0;
+            position: relative;
+            font-size: 0.9em;
+        }
+
+        .prompt-box::after {
+            content: "AI PROMPT";
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--space-green);
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-right: 8px;
+        }
+
+        .badge-location {
+            background: #D1E9F6;
+            color: #155E95;
+        }
+
+        .badge-time {
+            background: #FFD39B;
+            color: #8B4513;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f8f9fa;
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            font-size: 0.85em;
+            color: #999;
+        }
+
+        @media print {
+            .master-container {
+                margin: 0;
+                box-shadow: none;
+                border: none;
+                width: 100%;
+            }
+
+            .no-print {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            a {
+                color: black;
+                text-decoration: none;
+            }
+        }
+
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--toy-red);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: transform 0.2s;
+        }
+
+        .print-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="print-btn no-print" onclick="window.print()">СКАЧАТЬ PDF / ПЕЧАТЬ</button>
+
+    <div class="master-container">
+        <div class="hero">
+            <h1>Книжка Сценария</h1>
+            <p>Операция: Спасти Рождество - Дом Энди 2026</p>
+        </div>
+
+        <div class="content-wrap">
+
+            <!-- 1. MASTER SCENARIO -->
+            <section id="scenario">
+                <h2>Мастер-Сценарий (Режиссерская версия)</h2>
+
+                <h3>ЭТАП 1: УЛИЦА / ЗНАКОМСТВО</h3>
+                <p><span class="badge badge-location">Локация:</span> Перед калиткой детского центра</p>
+                <p><span class="badge badge-time">Тайминг:</span> 10:00 – 10:15</p>
+
+                <div class="action">Бигжан и Женя (Солдатики) встречают детей. Проводят игру на знакомство.</div>
+
+                <div class="dialogue">
+                    <span class="character">БИГЖАН</span>
+                    <span class="text">Смирно! Бойцы, сегодня особый день. Кто знает, какой?</span>
+                </div>
+
+                <div class="action">Из-за калитки вылетает РЕКС. Он в полной панике, размахивает лапками.</div>
+
+                <div class="dialogue">
+                    <span class="character">РЕКС</span>
+                    <span class="parenthetical">(заикаясь от страха)</span>
+                    <span class="text">Ой-ой-ой! Кошмар! В комнате Энди беда! Игрушка... ее нет! Младенец исчез!
+                        Праздник под угрозой! Это Лотсо, я чую запах клубники и коварства!</span>
+                </div>
+
+                <h3>ЭТАП 2: ЛЕСТНИЦА И РИТУАЛ</h3>
+                <div class="action">Дети поднимаются на 2-й этаж. Базз и Вуди замирают.</div>
+
+                <div class="dialogue">
+                    <span class="character">БАЗЗ</span>
+                    <span class="text">Бойцы, для миссии нужна экипировка. Сдаем гражданское — получаем игровое! Этот
+                        маркер — волшебный. Теперь вы — часть команды Игрушек!</span>
+                </div>
+
+                <h3>ЭТАП 3: СЦЕНА МАМЫ И ЭНДИ</h3>
+                <div class="script-block">
+                    <div class="dialogue">
+                        <span class="character">ЭНДИ</span>
+                        <span class="text">Мама, праздника не будет без Него?</span>
+                    </div>
+                    <div class="dialogue">
+                        <span class="character">МАМА</span>
+                        <span class="text">Смотри, сколько у тебя игрушек! Они помогут нам. Пойдем в церковь,
+                            Энди.</span>
+                    </div>
+                </div>
+
+                <h3>ЭТАП 4: ДОПРОС В ХОЛЛЕ</h3>
+                <div class="action">Люди ушли. Вуди выводит детей в холл на допрос свидетелей.</div>
+                <div class="dialogue">
+                    <span class="character">ВУДИ</span>
+                    <span class="text">Быстро! Пока Базз готовит прорыв, нам нужно узнать, куда Лотсо утащил
+                        Младенца!</span>
+                </div>
+
+                <h3>ЭТАП 5-8: КИБЕР-КВЕСТ И ФИНАЛ</h3>
+                <div class="action">Прохождение лазеров, Скуд, прыжки по теням. Открытие сейфа паролем «ПРАВДА».</div>
+            </section>
+
+            <!-- 2. TECH SCRIPT -->
+            <section id="tech">
+                <h2>Технический Сценарий управления</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Время</th>
+                            <th>Событие</th>
+                            <th>Экран</th>
+                            <th>Звук</th>
+                            <th>Свет</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10:00</td>
+                            <td>Старт на улице</td>
+                            <td>Логотип</td>
+                            <td>Кантри</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>10:15</td>
+                            <td>Прихожая</td>
+                            <td>Радар</td>
+                            <td>Сканирование</td>
+                            <td>Свет в холле ВКЛ</td>
+                        </tr>
+                        <tr>
+                            <td>10:35</td>
+                            <td>Уход в холл</td>
+                            <td>Лого</td>
+                            <td>Звук Ключа</td>
+                            <td>Свет ВЫКЛ</td>
+                        </tr>
+                        <tr>
+                            <td>10:50</td>
+                            <td>Возврат (Lock-in)</td>
+                            <td>Лотсо (Глюки)</td>
+                            <td>Смех медведя</td>
+                            <td>Красный свет</td>
+                        </tr>
+                        <tr>
+                            <td>11:20</td>
+                            <td>Теневые прыжки</td>
+                            <td>Слайды силуэтов</td>
+                            <td>Ритм</td>
+                            <td>Затемнение</td>
+                        </tr>
+                        <tr>
+                            <td>11:55</td>
+                            <td>Речь Мамы</td>
+                            <td>История Тараза</td>
+                            <td>Ангельский хор</td>
+                            <td>Теплый уют</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- 3. ROLES -->
+            <section id="roles">
+                <h2>Инструктаж Актеров</h2>
+                <h3>ВУДИ (Гаррисон Моисей)</h3>
+                <p><strong>Суть:</strong> Эмоциональный лидер. Твоя задача — психологический комфорт детей и удержание
+                    их внимания во время допроса в холле.</p>
+
+                <h3>БАЗЗ ЛАЙТЕР (Айбек)</h3>
+                <p><strong>Суть:</strong> Технический эксперт. Твоя цель — лазерный коридор и управление "космическими"
+                    девайсами.</p>
+
+                <h3>РЕКС (Карина)</h3>
+                <p><strong>Суть:</strong> Паникер-зажигалка. Ты создаешь первоначальный импульс на улице.</p>
+            </section>
+
+            <!-- 4. MEDIA PROMPTS -->
+            <section id="media">
+                <h2>Промпты для Генерации Медиа</h2>
+                <p>Используйте эти настройки для создания визуальных эффектов:</p>
+
+                <div class="prompt-box">
+                    Cinematic close-up of Lotso Bear from Toy Story 3. Pink fur, strawberry texture, slightly worn.
+                    Glitch effect transition from static to face. 4K, realistic.
+                </div>
+
+                <div class="prompt-box">
+                    Solid black silhouette of a cowboy (Woody) in a dynamic jump pose. High contrast, white background.
+                </div>
+
+                <div class="prompt-box">
+                    Old photograph of ancient Nestorian church in Taraz, Silk Road era. Sepia tones, historical style.
+                </div>
+            </section>
+
+            <!-- 5. STAGE MANAGER -->
+            <section id="stage">
+                <h2>Гид по Переходам</h2>
+                <div class="action">
+                    <strong>Критическое окно (10:35 - 10:50):</strong> У вас есть 15 минут, когда комната пуста. Команда
+                    из 3-х человек должна МГНОВЕННО натянуть нитки и расставить мусор.
+                </div>
+                <ul>
+                    <li><strong>Дверь:</strong> Всегда закрыта во время монтажа.</li>
+                    <li><strong>Сигнал Базза:</strong> Базз открывает дверь только после отмашки оператора.</li>
+                </ul>
+            </section>
+
+        </div>
+
+        <div class="footer">
+            <p>© 2026 Operation: Save Christmas. Prepared by Antigravity AI.</p>
+        </div>
+    </div>
+
+</body>
+
+</html>
